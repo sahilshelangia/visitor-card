@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Identity Card</title>
+    <style type="text/css">
+        td{
+            width: 110px;
+        }
+        tr{
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+        }
+        .details{
+            font-size: 14px;
+        }
+        
+        .details
+        {
+            height: 24px;
+        }
+        .header
+        {
+            font-size: 19px;
+            text-align: center;
+            background-color: yellow;
+            height: 23px;
+        }
+    </style>
+</head>
+<body>
+<table style="cellspacing:0px; cellpadding:0px;">
+    <tr class="header"><td rowspan="4" style="background-color: yellow;"><img style="height: 280px; width: 220px;"src="../media/{{MEDIA_URL}}images/iiit.png" width=100%></td>
+        <td style="background-color: yellow;" colspan="3">Atal Bihari Vajpayee-</td>
+    </tr>
+    <tr class="header"><td colspan="3" style="font-size: 14px; background-color: yellow;">Indian Institute of Information Technology and Management, Gwalior</td></tr>
+    <tr class="header"><td colspan="3" style="font-size: 11px; background-color: yellow; ">(An Autonomous Institute of MHRD, Government of India)</td></tr>
+    <tr class="header"><td colspan="3" style="font-size: 16px; background-color: yellow; ">Visitor Card</td></tr>
+    <tr class="details">
+        <td >Name: </td>
+        <td colspan="1">: {{visitor.name}}</td>
+        <td rowspan="4" colspan="1" ><img align="right" src="{{visitor.pic}}" alt="image not found" style="height: 200px; width:200px;"></td>    
+    </tr>
+
+    <tr class="details">
+        <td >Gender: </td>
+        <td colspan="2">: {{visitor.gender}}</td>
+    </tr>
+
+    <tr class="details">
+        <td >F/H name: </td>
+        <td colspan="2">: {{visitor.name_2}}</td>
+    </tr>
+        <tr class="details">
+           <td>Address: </td>
+           <td colspan="2">: {{visitor.address}}</td>
+        </tr>
+        <tr class="details">
+           <td>ID No.: </td>
+           <td colspan="2">: {{visitor.id_no}}</td>
+        </tr>
+        <tr class="details">
+           <td>ID Type: </td>
+           <td colspan="2">: {{visitor.id_type}}</td>
+        </tr>
+        <tr class="details">
+           <td>Mobile :</td>
+           <td colspan="2">: {{visitor.mob}}</td>
+        </tr>
+        <tr class="details">
+           <td>Vehicle No: </td>
+           <td colspan="2">: {{visitor.veh}}</td>
+        </tr>
+
+        <tr class="details">
+           <td>Purpose: </td>
+           <td colspan="2">: {{visitor.purpose}}</td>
+        </tr>
+        <tr class="details">
+           <td>Destination: </td>
+           <td colspan="2">: {{visitor.dest}}</td>
+           <td rowspan="3"><img src="../media/{{MEDIA_URL}}images/sign.png" style="height: 90px; width: 160px;"></td>
+        </tr>
+        <tr class="details">
+           <td>Time In: </td>
+           <td colspan="2">: {{visitor.time_in}}</td>
+        </tr>
+         <tr class="details">
+           <td>Valid Upto: </td>
+           <td colspan="2">: {{visitor.expected_out_time}}</td>
+           <td rowspan="3">(S.O.)</td>
+        </tr>
+        <tr class="details">
+           <td>Time Out: </td>
+           {%if visitor.status_in%}
+           <td colspan="2">: Not Yet Check Out</td>
+           {%else%}
+           <td colspan="2">: {{visitor.time_out}}</td>
+           {%endif%}
+        </tr>
+        <tr></tr>
+        <tr>
+          <td style="font-size: 14px" colspan="2">Sign Of Referenced Person:</td>
+        </tr>
+</table>
+<br>
+---------------&#9986------------------------------------------------&#9986-----------------------------------&#9986----------------------------------------------&#9986----------------------------------
+<br>
+<table style="cellspacing:0px; cellpadding:0px;">
+    <tr class="header"><td rowspan="4" style="background-color: yellow;"><img style="height: 280px; width: 220px;"src="../media/{{MEDIA_URL}}images/iiit.png" width=100%></td>
+        <td style="background-color: yellow;" colspan="3">Atal Bihari Vajpayee-</td>
+    </tr>
+    <tr class="header"><td colspan="3" style="font-size: 14px; background-color: yellow;">Indian Institute of Information Technology and Management, Gwalior</td></tr>
+    <tr class="header"><td colspan="3" style="font-size: 11px; background-color: yellow; ">(An Autonomous Institute of MHRD, Government of India)</td></tr>
+    <tr class="header"><td colspan="3" style="font-size: 16px; background-color: yellow; ">Visitor Card</td></tr>
+    <br>
+    <tr class="details">
+        <td >Name: </td>
+        <td colspan="1">: {{visitor.name}}</td>
+        <td rowspan="4" colspan="1" ><img align="right" src="{{visitor.pic}}" alt="image not found" style="height: 200px; width:200px;"></td>    
+    </tr>
+
+    <tr class="details">
+        <td >Gender: </td>
+        <td colspan="2">: {{visitor.gender}}</td>
+    </tr>
+
+    <tr class="details">
+        <td >F/H name: </td>
+        <td colspan="2">: {{visitor.name_2}}</td>
+    </tr>
+        <tr class="details">
+           <td>Address: </td>
+           <td colspan="2">: {{visitor.address}}</td>
+        </tr>
+        <tr class="details">
+           <td>ID No.: </td>
+           <td colspan="2">: {{visitor.id_no}}</td>
+        </tr>
+        <tr class="details">
+           <td>ID Type: </td>
+           <td colspan="2">: {{visitor.id_type}}</td>
+        </tr>
+        <tr class="details">
+           <td>Mobile :</td>
+           <td colspan="2">: {{visitor.mob}}</td>
+        </tr>
+        <tr class="details">
+           <td>Vehicle No: </td>
+           <td colspan="2">: {{visitor.veh}}</td>
+        </tr>
+
+        <tr class="details">
+           <td>Purpose: </td>
+           <td colspan="2">: {{visitor.purpose}}</td>
+        </tr>
+        <tr class="details">
+           <td>Destination: </td>
+           <td colspan="2">: {{visitor.dest}}</td>
+           <td rowspan="3"><img src="../media/{{MEDIA_URL}}images/sign.png" style="height: 90px; width: 160px;"></td>
+        </tr>
+        <tr class="details">
+           <td>Time In: </td>
+           <td colspan="2">: {{visitor.time_in}}</td>
+        </tr>
+         <tr class="details">
+           <td>Valid Upto: </td>
+           <td colspan="2">: {{visitor.expected_out_time}}</td>
+           <td rowspan="3">(S.O.)</td>
+        </tr>
+        <tr class="details">
+           <td>Time Out: </td>
+           {%if visitor.status_in%}
+           <td colspan="2">: Not Yet Check Out</td>
+           {%else%}
+           <td colspan="2">: {{visitor.time_out}}</td>
+           {%endif%}
+        </tr>
+        <tr></tr>
+        <tr>
+          <td style="font-size: 14px" colspan="2">Sign Of Referenced Person:</td>
+        </tr>
+</table>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

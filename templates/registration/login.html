@@ -1,0 +1,47 @@
+{%extends 'visitor/base.html'%}
+{% load staticfiles %}
+{% block active%}
+<div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav ">
+      <li class="active"><a href="{%url 'index'%}"><i class="fas fa-home"></i>&ensp; Home</a></li>
+      <li><a href="{%url 'visitor:register'%}">Add new</a></li>
+      <li><a href="{%url 'visitor:checkedin_list'%}">Checked In</a></li>
+      <li><a href="{%url 'visitor:list'%}">Checked Out</a></li>     
+    </ul>
+{% endblock%}
+
+{%block content%}
+<!DOCTYPE html>
+<html>
+<head>
+<title>ID-CARD</title>
+<body>
+    <div class="fulll">
+    <div class="container">
+        <div class="card card-container" style="padding-top: 25px;">
+            <h2 style="text-align: center; margin-top: 0px;">Admin Login</h2>
+            <br/>
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+            <img id="profile-img" class="profile-img-card" src="{%static 'card/images/profile.png'%}" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" method="post" action="">{% csrf_token %}
+                <span id="reauth-email" class="reauth-email"></span>
+                 {% for field in form %}
+	                <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}"  type="{% cycle "text" "password" %}" placeholder="{{ field.html_name }}" required autofocus/> 
+	                {{ field.errors }}
+				  {% endfor %}
+                <!-- <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+               
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            </form><!-- /form -->
+            <a href="{%url 'password_reset' %}" class="forgot-password">
+                Forgot the password?
+            </a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+   </div>
+
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,181 @@
+{%extends 'visitor/base.html'%}
+{%load static%}
+{% block active%}
+<div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav">
+      <li><a href="{%url 'index'%}"><i class="fas fa-home"></i>&ensp; Home</a></li>
+      <li class="active"><a href="{%url 'visitor:register'%}">Add new</a></li>
+      <li><a href="{%url 'visitor:checkedin_list'%}">Checked In</a></li>
+      <li><a href="{%url 'visitor:list'%}">Checked Out</a></li>     
+    </ul>
+{% endblock%}
+
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <style type="text/css">
+            .required .control-label:after {
+          content:"*";
+          color:red;
+        }
+        </style>
+    </head>
+<body>
+
+    <script>
+        $(document).ready(function() {
+          $('.datepick').datetimepicker();
+        });
+    </script>   
+    
+    <!-- Configure a few settings and attach camera -->
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+    </script>
+    
+    <!-- Code to handle taking the snapshot and displaying it locally -->
+    <script language="JavaScript">
+        function setup() {
+            Webcam.reset();
+            Webcam.attach( '#my_camera' );
+        }
+        
+        function take_snapshot() {
+            // take snapshot and get image data
+            Webcam.snap( function(data_uri) {
+                // display results in page
+                document.getElementById("myPhoto").value=data_uri;
+                document.getElementById('res').innerHTML='';
+                document.getElementById('results').innerHTML = 
+                    // alert(data_uri);
+                    '<h3 style="text-align:center; margin-top:0px;padding:0px;">Here is your image:</h3>' + 
+                    '<img src="'+data_uri+'" id="capture"/>' ;
+            } );    
+        }                
+    </script>
+
+    <div class="container jumbotron" style="width: 60%;">
+        <form name="myform" class="form-group" method="POST" action="{%url 'visitor:register'%}">
+            <h2 style="text-align: center; font-weight: bold;"><i class="fas fa-id-card"></i>&ensp;&ensp;Visitor Registration Form</h2>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-sm-6">
+                    <div id="my_camera"></div>
+    
+                    <!-- First, include the Webcam.js JavaScript Library -->
+                    <script type="text/javascript" src="{%static 'card/js/webcam.min.js'%}"></script>
+                    
+                    <!-- Configure a few settings and attach camera -->
+                    <script language="JavaScript">
+                        Webcam.set({
+                            width: 320,
+                            height: 240,
+                            image_format: 'jpeg',
+                            jpeg_quality: 90
+                        });
+                    </script>
+                                    
+                
+                    <!-- A button for taking snaps -->
+                    <div class="container">
+                            {%csrf_token%}
+                            <button type="button" class="btn btn-default btn-sm" onClick="setup(); $(this).hide().next().show();">
+                              <span class="glyphicon glyphicon-camera"></span> Access Camera / कैमरा 
+प्रयोग करें
+                            </button>
+
+                            <input type="button"  class="btn btn-primary center" value="Take Snapshot" onClick="take_snapshot()" style="display:none; margin-top: 0px ;width: 80%"><br><br>
+                            <input type="hidden"  value="{{obj.pic}}" id="myPhoto" name="pic" ><br><br>
+                    </div>
+                </div>
+
+                <div  id="res" class="col-sm-6" >
+                <h3 style="text-align:center; margin-top:0px;padding:0px;">Here is your image:</h3> 
+                    <img src="{{obj.pic}}" id="capture"/>
+                </div>
+                <div class="col-sm-6">
+                    <div id="results" style="margin-top: 0px; padding-top: 0px;">Your captured image will appear here...</div>
+                </div>
+                <input type="hidden" name="id" value="{{ID}}">
+                <div class="col-sm-8 required">
+                    <label class="control-label" >Name of Visitor / आगंतुक का नाम</label>
+                    {{form.name}}
+                </div>
+
+                <div class="col-sm-4 required">
+                    <label class="control-label" >Gender / लिंग</label>
+                    {{form.gender}}
+                </div>
+
+                <div class="col-sm-12 required">
+                    <label class="control-label">Father's/Husband's Name / 
+                        पिता / पति का नाम</label>
+                    {{form.name_2}}              
+                </div>
+                
+                <div class="col-sm-12 required">
+                    <label class="control-label">Address / पता</label>
+                    {{form.address}}
+                </div>
+                
+                <div class="col-sm-6 ">
+                    <label>ID Type / आई.डी. प्रकार</label>
+                    {{form.id_type}}
+                </div>
+
+                <div class="col-sm-6">
+                    <label>ID Number / आई.डी. संख्या</label>
+                    {{form.id_no}}
+                </div>
+                                
+                <div class="col-sm-6">
+                    <label>Mobile Number / मोबाइल नंबर</label>
+                    {{form.mob}}
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Email ID / ईमेल आई.डी.</label>
+                    {{form.email}}
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Vehicle Number / वाहन संख्या</label>
+                    {{form.veh}}
+                </div>
+                <div class="col-sm-6 required">
+                    <label class="control-label">Purpose of Visit / आने का उद्देश्य</label>
+                    {{form.purpose}}
+                </div>
+                <div class="col-sm-6 required">
+                    <label class="control-label">Destination/ गंतव्य</label>
+                    {{form.dest}}
+                </div>
+
+                <div class="col-sm-6 required">
+                    <label class="control-label"  for="valid">Valid Upto / तक वैध है</label>
+                    <div class="form-group required">
+                      <div class="input-group">
+                        <input type="text" class="form-control datepick" name="expected_out_time" value="{{obj.expected_out_time}}" >
+                        <div class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12"  style="text-align: center;margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary" style="width: 50%;">Submit / जमा करें</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{%endblock%}

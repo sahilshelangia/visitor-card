@@ -1,0 +1,156 @@
+{%extends 'visitor/base.html'%}
+{%load static%}
+
+{% block active%}
+<div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav">
+      <li><a href="{%url 'index'%}"><i class="fas fa-home"></i>&ensp; Home</a></li>
+      <li><a href="{%url 'visitor:register'%}">Add new</a></li>
+      <li><a href="{%url 'visitor:checkedin_list'%}">Checked In</a></li>
+      <li class="active"><a href="{%url 'visitor:list'%}">Checked Out</a></li>     
+    </ul>
+{% endblock%}
+
+{%block content%}
+<form action="{%url 'visitor:list'%}" method="POST" class="form-inline" style="width: 100%">
+  {%csrf_token%}
+  <div class="form-group">
+    <input type="text" name="name" placeholder="Name" class="form-control" >
+  </div>
+  <div class="form-group">
+    <input type="text" name="id_no" placeholder="ID Number" class="form-control" >
+  </div>
+  <div class="form-group">
+    <input type="text" name="mob_no" placeholder="Mobile Number" class="form-control" >
+  </div>
+
+
+   <div class="form-group required">
+    <div class="input-group">
+      <input type="text" class="form-control datepick" name="time_in" id="frmSaveOffice_startdt" placeholder="From" required>
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </div>
+    </div>
+  </div>
+
+   <div class="form-group required">
+    <div class="input-group">
+      <input type="text" class="form-control datepick" placeholder="To" name="time_out" id="frmSaveOffice_startdt" required>
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </div>
+    </div>
+  </div>
+  
+
+ <!--  <div class="form-group">
+    <input type="datetime-local" name="time_in" value="2018-06-12T19:30" class="form-control" >
+  </div>
+  <div class="form-group">
+    <input type="datetime-local" name="time_out" value="2019-03-12T19:32" class="form-control" >
+  </div> -->
+
+
+ 
+  <script>
+$(document).ready(function() {
+  $('.datepick').datetimepicker();
+});
+
+</script> 
+
+
+
+
+  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-filter"></i>  Filter</button>
+</form>
+
+
+  
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <script src="{%static 'card/js/jquery.dataTables.min.js'%}"></script>
+  <link rel="stylesheet" href="{%static 'card/css/font1.css'%}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="{%static 'card/css/jquery.dataTables.min.css'%}">
+  <style>
+      body { 
+        padding-top: 51px; 
+      }
+          .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+        display: block;
+        height: 450px;
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        line-height: 1;
+    }
+      
+  .row { margin: 0; padding: 0 }
+      * {
+          box-sizing: border-box;
+        }
+      
+  table {
+        width:100%;
+  }
+      
+
+
+th, td {
+  padding: 10px;
+  text-align: centre;
+}
+table#mydata tr:nth-child(even) {
+  background-color: #eee;
+}
+table#mydata tr:nth-child(odd) {
+ background-color: #fff;
+}
+table#mydata th {
+  opacity: 0.7;
+  background-color: black;
+  color: white;
+}
+      
+    </style>
+</head>
+    
+    <table class="table-bordered table table-hover" id="mydata">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>ID Type</th>
+                <th>ID No.</th>
+                <th>Mob. No.</th>
+                <th>Check In Time</th>
+                <th>Check Out</th>
+                <!-- <th>Re-Entry of Visitor</th> -->
+            </tr>
+        </thead>
+        <tbody>
+        {%for v in visitors%}
+          <tr>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.name}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.gender}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.id_type}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.id_no}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.mob}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.time_in}}</a></td>
+            <td><a href="{%url 'visitor:detail' v.id%}">{{v.time_out}}</a></td>
+            <!-- <td><a href="{%url 'visitor:re_entry' v.id%}">Click here for RE-ENTRY</a></td> -->
+          </tr>
+        {%endfor%}
+            
+        </tbody>
+    </table>
+    <script>
+        
+        $('#mydata').dataTable({
+          aaSorting: [[5, 'desc']]
+          });
+    </script>
+    <br/>
+    <br/>
+{%endblock%}
